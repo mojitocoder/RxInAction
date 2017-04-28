@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 namespace RxInAction
 {
@@ -12,6 +13,23 @@ namespace RxInAction
     {
         static void Main(string[] args)
         {
+            // **************************************
+            // Create: Create an observable
+            //  by writing into the observer
+            // **************************************
+            var countries = Observable.Create<string>(observer =>
+            {
+                var list = new List<string> { "Britain", "US", "France", "Germany" };
+                foreach (var item in list)
+                {
+                    observer.OnNext(item);
+                }
+
+                observer.OnCompleted();
+                return Disposable.Empty;
+            });
+            //countries.SubscribleConsole();
+
             // **************************************
             // Using: Read file into an observable
             // **************************************
@@ -47,9 +65,15 @@ namespace RxInAction
             // Return: Create an observable that throws an exception
             // **************************************
             var throwsError = Observable.Throw<ApplicationException>(new ApplicationException("This error shall throw up"));
-            throwsError.SubscribleConsole();
+            //throwsError.SubscribleConsole();
+
+            var deferred = Observable.Defer(() => {
+                return Enumerable.Range(1, 10).ToObservable();
+            });
+            deferred.SubscribleConsole();
 
 
+            
 
             Console.ReadLine();
         }

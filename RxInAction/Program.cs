@@ -122,4 +122,6 @@ namespace RxInAction
             return observable.Subscribe(new ConsoleObserver<T>(name));
         }
     }
+
+
 }

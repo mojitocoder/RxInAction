@@ -70,10 +70,7 @@ namespace RxInAction
             var deferred = Observable.Defer(() => {
                 return Enumerable.Range(1, 10).ToObservable();
             });
-            deferred.SubscribleConsole();
-
-
-            
+            deferred.SubscribleConsole();          
 
             Console.ReadLine();
         }

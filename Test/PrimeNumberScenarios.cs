@@ -11,11 +11,7 @@ namespace Test
     public class PrimeNumberScenarios
     {
         PrimeNumber primeNumber = new PrimeNumber();
-
-        [Fact]
-        public void Generate_Correctly()
-        {
-            var primes = new List<int> { 2, 3, 5, 7, 11, 13, 17, 19, 23,
+        List<int> primes = new List<int> { 2, 3, 5, 7, 11, 13, 17, 19, 23,
                                         29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
                                         71, 73, 79, 83, 89, 97, 101, 103, 107, 109,
                                         113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
@@ -33,9 +29,18 @@ namespace Test
                                         863, 877, 881, 883, 887, 907, 911, 919, 929, 937,
                                         941, 947, 953, 967, 971, 977, 983, 991, 997};
 
+        [Fact]
+        public void Generate_Correctly()
+        {
             var amount = primes.Count;
             var generatedPrimes = primeNumber.Generate(amount);
+            Assert.Equal(primes, generatedPrimes);
+        }
 
+        [Fact]
+        public void GenerateYield_Correctly()
+        {
+            var generatedPrimes = primeNumber.GenerateYield(primes.Count);
             Assert.Equal(primes, generatedPrimes);
         }
     }

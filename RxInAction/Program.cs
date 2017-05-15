@@ -11,8 +11,36 @@ namespace RxInAction
 {
     class Program
     {
+        public static void CreateObservers()
+        {
+            //Creating observer with Cancellation Token
+            //var cts = new canc 
+
+            //Creating observer on the pipe
+            //  using lambda expressions
+            var sub = Observable.Range(1, 10)
+                .Select(foo => foo / (foo - 3))
+                .Timestamp()
+                .Subscribe(foo =>
+                {
+                    Console.WriteLine($"OnNext with: {foo}");
+                },
+                exception =>
+                {
+                    Console.WriteLine($"OnError with: {exception.Message};\n{exception.StackTrace}");
+                },
+                () =>
+                {
+                    Console.WriteLine($"OnCompleted!");
+                });
+        }
+
         static void Main(string[] args)
         {
+            CreateObservers();
+
+            Console.ReadKey();
+
             // **************************************
             // Create: Create an observable
             //  by writing into the observer
@@ -67,10 +95,11 @@ namespace RxInAction
             var throwsError = Observable.Throw<ApplicationException>(new ApplicationException("This error shall throw up"));
             //throwsError.SubscribleConsole();
 
-            var deferred = Observable.Defer(() => {
+            var deferred = Observable.Defer(() =>
+            {
                 return Enumerable.Range(1, 10).ToObservable();
             });
-            deferred.SubscribleConsole();          
+            deferred.SubscribleConsole();
 
             Console.ReadLine();
         }
@@ -119,6 +148,5 @@ namespace RxInAction
             return observable.Subscribe(new ConsoleObserver<T>(name));
         }
     }
-
 
 }
